@@ -1,0 +1,30 @@
+CRUD with ORM
+........ insert a record
+Courses.objects.create(title ='Data science',description = 'qwertyuu',
+                        image = 'photo.jpg',instructor = 'xyz',
+                        category = 'IT & support',level = 'intermediate',
+                        fee = 35000,offer_fee = 40000)
+
+
+orm query for fetch all the records
+Courses.objects.all()
+
+orm query for fetch record with id..5
+Courses.objects.get(id=5)
+
+orm query for fetch all beginer level Courses
+Courses.objects.filter(level='Beginner')
+
+orm query for fetch all Courses with price 35000
+Courses.objects.filter(price=35000)
+
+Courses.objects.filter(price__lte = 50 000)
+
+not beginner level
+
+Courses.objects.filter().exclude(level='beginner')
+
+filter begineer level courses and intermediate courses
+
+Courses.objects.filter(Q(title __icontains = querry) | Q(description __icontains = querry ) |
+                      Q(image __icontains = querry) | Q(category __icontains = querry))
