@@ -70,7 +70,7 @@ class HomeView(View):
 class InstructorCourseListView(View):
      def get(self,request,*args,**kwargs):
 
-          instructor=Instructors.objects.get(id=1)
+          instructor=Instructors.objects.get(profile = request.user)
           
           courses = Courses.objects.filter(instructor=instructor)
           

@@ -3,5 +3,5 @@ from .import views
 
 urlpatterns = [
 
-    path('student-register/',views.StudentRegistationView.as_view(),name='student-register')
+    path('student-register/',views.StudentRegisterView.as_view(),name='student-register')
 ]
