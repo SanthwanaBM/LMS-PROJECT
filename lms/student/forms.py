@@ -82,7 +82,7 @@ class ProfileForm(forms.ModelForm):
                 'class': 'form-control',
                 'required':'required'}),
 
-            'password' : forms.TextInput(attrs={
+            'password' : forms.PasswordInput(attrs={
                 'class': 'form-control',
                 'required':'required'})
 

@@ -53,6 +53,19 @@ class coursesListView(View):
 
 # @method_decorator(login_required(login_url='login'),name='dispatch')
 # @method_decorator(permission_role(roles=['Instructor']),name='dispatch')
+class CoursesDetailView(View):
+     
+     def get(self,request,*args,**kwargs):
+          
+          uuid =kwargs.get('uuid')
+
+          course = Courses.objects.get(uuid=uuid)
+
+          data = {'course': course}
+          
+          return render(request,'courses/course-details.html',context=data )        
+     
+
 
 class HomeView(View):
         def get(self,request,*args,**kwargs):
