@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- {% load check_roles %} -->
+    <!-- {% load check_roles %} -->
+
 <head>
     <meta charset="utf-8">
-    <title>LMS</title>
+    <title>LMS Project </title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -19,7 +20,11 @@
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
+    
+     <!-- font awsome cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    
     <!-- Libraries Stylesheet -->
     <link href="/static/lib/animate/animate.min.css" rel="stylesheet">
     <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -29,9 +34,6 @@
 
     <!-- Template Stylesheet -->
     <link href="/static/css/style.css" rel="stylesheet">
-    <!----fontawesome cdn-->
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -46,7 +48,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="home.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>eLEARNING</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -55,60 +57,72 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
 
-                {% if page == 'home-page'%}
-                <a href="{% url 'home'%}" class="nav-item nav-link active">Home</a>
+                {% if page == 'home-page' %}
+                <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
                 {% else %}
-                <a href="{% url 'home'%}" class="nav-item nav-link ">Home</a>
-                {%endif%}
+                <a href="{% url 'home' %}" class="nav-item nav-link ">Home</a>
+                {% endif %}
 
-                {% if page == 'about-page'%}
+                {% if page == 'about-page' %}
                 <a href="about.html" class="nav-item nav-link active">About</a>
                 {% else %}
-                <a href="about.html" class="nav-item nav-link">About</a>
-                {%endif%}
+                <a href="about.html" class="nav-item nav-link ">About</a>
+                {% endif %}
+
+
+
+                <!-- {% if user.is_authenticated and user.role == 'Instructor' %} -->
+
+                {% user_role_checking request 'Instructor' as allow %}
+
+                {% if allow %}
+
+                {% if page == 'instructor-courses-page' %}
+                <a href="{% url 'instructor-courses-list' %}" class="nav-item nav-link active">Your Courses</a>
+                {% else %}
+                <a href="{% url 'instructor-courses-list' %}" class="nav-item nav-link ">Your Courses</a>
+                {% endif %}
+
+                {% endif%}
+                <!-- {% endif%} -->
+
+
+
+                {% if page == 'courses-page' %}
+                <a href="{% url 'course-list' %}" class="nav-item nav-link active">Courses</a>
+                {% else %}
+                <a href="{% url 'course-list' %}" class="nav-item nav-link ">Courses</a>
+                {% endif %}   
                 
                 
-
-                {% if page == 'coursespage'%}
-                <a href="{% url 'courses-list'%}" class="nav-item nav-link active">Courses</a>
-                {% else %}
-                <a href="{% url 'courses-list'%}" class="nav-item nav-link">Courses</a>
-                {%endif%}
-
-                <!-- {% if user.is_authenticated and user.role == 'Instructor' %}  -->
-
-                {% user_role_checking request 'Instructor,Admin' as allow %}
-
-                {% if allow%}
-
-                {% if page == 'instructor-courses-page'%}
-                <a href="{% url 'instructor-courses-list'%}" class="nav-item nav-link active">Your Courses</a>
-                {% else %}
-                <a href="{% url 'instructor-courses-list'%}" class="nav-item nav-link">Your Courses</a>
-                {% endif %}
-                {% endif %}
-                <!-- {% endif %} -->
-                
-                {% if not user.is_authenticated %}
-
-                {% if page == 'login-page'%}
-                <a href="{% url 'login'%}" class="nav-item nav-link active">Login</a>
-                {% else %}
-                <a href="{% url 'login'%}" class="nav-item nav-link">Login</a>
-                {% endif %}
+                {% if not user.is_authenticated %}  <!-- # checking whethe it is authenticated user or not.  -->
+                                                    <!-- # is_authenticated is a property decorator -->
+                    {% if page == 'login-page' %}
+                        <a href="{% url 'login' %}" class="nav-item nav-link active">Login</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="nav-item nav-link ">Login</a>
+                    {% endif %}
                 {% endif %}
 
-                {% if user.is_authenticated %} 
+
+               {% if user.is_authenticated %}
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link " data-bs-toggle="dropdown">
-                        <div class="d-flex align=align-items-center justify-content-center text-center">
-                        <img src="" style="width: 50px; height: 50px; border-radius: 50%;" alt="">
-                        <p class="text-secondary">{{user}}</p>
+
+                        <div class="d-flex align-items-center">
+
+                            
+                            {% get_image  request as photo %}
+                            {% if photo %}
+                        <img src="{{photo.url}}" alt="" style="width: 30px; height: 30px; border-radius:50%;">
+                        {% endif %}
+                        <p class="text-secondary ms-1"> {{user}}</p>
                         </div>
                     </a>
                     <div class="dropdown-menu fade-down m-0">
                         <a href="{% url 'logout' %}" class="dropdown-item">Logout</a>
-                        
+                        <!-- <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                        <a href="404.html" class="dropdown-item">404 Page</a> -->
                     </div>
                 </div>
                 {% endif %}
@@ -120,11 +134,19 @@
     <!-- Navbar End -->
 
 
-
     {% block section %}
+
+
     {% endblock %}
-      <!-- Footer Start -->
-      <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+
+
+
+
+
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container py-5">
             <div class="row g-5">
                 <div class="col-lg-3 col-md-6">
@@ -151,25 +173,26 @@
                     <h4 class="text-white mb-3">Gallery</h4>
                     <div class="row g-2 pt-2">
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-1.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-2.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-3.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-2.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-2.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-3.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-3.jpg" alt="">
                         </div>
                         <div class="col-4">
-                            <img class="img-fluid bg-light p-1" src="img/course-1.jpg" alt="">
+                            <img class="img-fluid bg-light p-1" src="/static/img/course-1.jpg" alt="">
                         </div>
                     </div>
                 </div>
+
                 <div class="col-lg-3 col-md-6">
                     <h4 class="text-white mb-3">Newsletter</h4>
                     <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>

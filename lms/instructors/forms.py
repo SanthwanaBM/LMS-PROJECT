@@ -1,33 +1,36 @@
 from django import forms
 
-from .models import Instructors,AreaOfExpertise
+from . models import Instructors,AreaOfExpertise
+
 
 
 class InstructorForm(forms.ModelForm):
 
 
-
-    class Meta :
+    class Meta:
 
         model = Instructors
 
-        exclude = ['Profile','name','uuid','active_status']
+        exclude = ['profile', 'uuid', 'active_status', 'name']
 
-        widgets = {
-            'image' : forms.FileInput(attrs={
-                'class': 'form-control',
-                'required':'required'}),
+        widgets={
 
-            'description' : forms.Textarea(attrs={
-                'class': 'form-control',
-                'required':'required',
-                'rows' : '6',
-                'cols':'15'
-                }),    
+            'image'    :   forms.FileInput(attrs={
+                                                    'class' :   'form-control',
+                                                    'required'  :   'required'
+                                                }),
+            'description'    :   forms.Textarea(attrs={
+                                                    'class' :   'form-control',
+                                                    'required'  :   'required',
+
+                                                    'rows': '6',
+                                                    'cols' : '6'
+                                                })}
+        
+        area_of_expertise    =  forms.ModelChoiceField(queryset=AreaOfExpertise.objects.all(),
+                                                  widget=forms.Select(attrs={
+                                                      'class' :   'form-select',
+                                                      'required'  :   'required'
+                                                  }))
             
-        }
-
-    area_of_expertise = forms.ModelChoiceField(queryset=AreaOfExpertise.objects.all(),widget=forms.Select(attrs={
-                                                                                           
-                                                                                           'class': 'forms-select',
-                                                                                           'required':'required'}))
+        

@@ -1,30 +1,31 @@
 from django.db import models
 
-# Create your models here.
-
 from django.contrib.auth.models import AbstractUser
 
+# Create your models here.
+
 class RoleChoices(models.TextChoices):
+    ADMIN = 'Admin', 'Admin'
 
-    ADMIN = 'Admin','Admin'
+    STUDENT = 'Student', 'Student'
 
-    STUDENT = 'Student','Student'
-
-    INSTRUCTOR = 'Instructor','Instructor'
+    INSTRUCTOR = 'Instructor' , 'Instructor'
 
 
 class Profile(AbstractUser):
 
     # image = models.ImageField(upload_to='profile-images/')
 
-    role = models.CharField(max_length=15, choices=RoleChoices.choices)
+
+    role = models.CharField(max_length=20, choices=RoleChoices.choices)
+
 
     def __str__(self):
-        return f'{self.first_name}--{self.last_name}--{self.role}'
+        return f'{self.first_name}-{self.last_name}-{self.role}'
     
-
     class Meta:
 
-        verbose_name = 'profile'
+        verbose_name = 'Profile'
 
-        verbose_name_plural = 'profile'
+        verbose_name_plural = 'Profile'
+

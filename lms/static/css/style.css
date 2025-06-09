@@ -433,8 +433,8 @@
     border-right: none;
 }
 
-.card-img-top{
+#course-img {
 
-    width: auto;
+    width: 1000px;
     height: 350px;
 }

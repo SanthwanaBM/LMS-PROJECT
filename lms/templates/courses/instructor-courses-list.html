@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 
-{% block section %}
 
+{% block section %}
 <div class="container my-5">
-    <div class="card border-primary " >
-      <div class="card-header bg-primary d-flex align-items-center justify-content-between" >
-        <h3 class = "text-white  fw-bold fs-4">  Available Courses </h3>
-        <a href="{% url 'create-course' %}" class ="btn btn-success border border-success rounded-3"> Create courses</a> 
+
+       <div class="row justify-content-end">
+            <div class="col-6 my-4 ">
+                <form action="{% url 'instructor-courses-list' %}" method="get">
+                <input class="form-control" type="text" placeholder="search courses" name="query"{% if query %} value="{{query}}" {% endif %}>
+                </form>
+            </div> 
+
+
+    <div class="card border-primary">
+
+         
+
+      <div class="card-header bg-primary  d-flex  justify-content-between  mt-3">
+        <h3 class="text-white fw-bold fs-4">Your Courses</h3>
+        <a href=" {% url 'create-course' %}" class="btn btn-success border border-success rounded-3"> Create a course </a>
         
       </div>
       <div class="table-responsive">
@@ -18,32 +30,27 @@
               <th scope="col">Level</th>
               <th scope="col">Fee</th>
               <th scope="col">Offer Fee</th>
-              <th scope="col">Actions</th>
+              <th scope="col">Actions </th>
             </tr>
           </thead>
           <tbody class="text-center">
-           {% for course in courses %}
+            {% for course in courses %}
             <tr>
               <td>{{course.title}}</td>
               <td>{{course.category}}</td>
               <td>{{course.level}}</td>
               <td>{{course.fees}}</td>
-              <td class="text-success fw-bold">{% if course.offer_fee%}{{course.offer_fee}}{% endif %}</td>
-              
-              
-              <td class="text-success fw-bold">$399</td>
+              <td class="text-success fw-bold">{% if course.offer_fee %} {{course.offer_fee}} {% endif %}</td>
               <td>
-                <a href="{% url 'instructor-course-details' course.uuid %}" class="text-primary me-2"><i class="fas fa-eye"></i></a>
+                <a href="{% url 'instructor-course-detail' course.uuid %}" class="text-primary me-2"><i class="fas fa-eye"></i></a>
                 <a href="{% url 'instructor-course-update' course.uuid %}" class="text-warning me-2"><i class="fas fa-pen"></i></a>
                 <a href="{% url 'instructor-course-delete' course.uuid %}" class="text-danger"><i class="fas fa-trash"></i></a>
-              </td>
-
+              </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
-    </div>
+    </div>
   </div>
-
-  {% endblock %}
+{% endblock %}

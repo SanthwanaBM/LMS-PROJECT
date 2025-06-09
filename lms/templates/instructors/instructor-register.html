@@ -5,7 +5,7 @@
 <div class="container my-5">
     <div class="card border-primary">
       <div class="card-header bg-primary text-white text-center fw-bold fs-4">
-     Student Register
+     Instructor Registration
       </div>
       <div class="card-body">
         <form method="post" enctype="multipart/form-data">
@@ -45,9 +45,9 @@
          <div class="mb-3">
                  
             <label for="courseDescription" class="form-label">Image</label>
-            {{ student_form.image }}
-            {% if student_form.image.errors %}
-                    <p class="text-danger">{{ student_form.image.errors | join:" " }}</p>
+            {{ instructor_form.image }}
+            {% if instructor_form.image.errors %}
+                    <p class="text-danger">{{ instructor_form.image.errors | join:" " }}</p>
             {% endif %}
         
             </div>
@@ -75,28 +75,32 @@
           
             </div>
         </div>
+
+         <div class="mb-3">
+            <label for="courseCategory" class="form-label">Description </label>
+            {{ instructor_form.description }}
+            {% if instructor_form.description.errors %}
+                    <p class="text-danger">{{ instructor_form.description.errors | join:" " }}</p>
+            {% endif %}
+        </div>
         
          
         <div class="mb-3">
-            <label for="courseCategory" class="form-label">Qualification</label>
-            {{ student_form.qualification }}
-            {% if student_form.qualification.errors %}
-                    <p class="text-danger">{{ student_form.qualification.errors | join:" " }}</p>
+            <label for="courseCategory" class="form-label">Area of Expertise </label>
+            {{ instructor_form.area_of_expertise }}
+            {% if instructor_form.area_of_expertise.errors %}
+                    <p class="text-danger">{{ instructor_form.area_of_expertise.errors | join:" " }}</p>
             {% endif %}
         </div>
-  
-          
-  
-          
-        </div>
-  
           
   
           <div class="text-center">
-            <button type="submit" class="btn btn-primary text-white mt-4 mb-3">Register Student </button>
+            <button type="submit" class="btn btn-primary text-white mt-4 mb-3">Register Instructor </button>
+          </div>
           </div>
         </form>
+        </div>
       </div>
     </div>
-  </div>
+
 {% endblock %}

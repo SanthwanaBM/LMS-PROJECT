@@ -9,13 +9,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-from decouple import config
-from pathlib import Path
 
+from pathlib import Path
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
 
 
 # Quick-start development settings - unsuitable for production
@@ -42,7 +40,7 @@ INSTALLED_APPS = [
     'courses',
     'instructors',
     'authentication',
-    'student',
+    'students',
     'payments'
 ]
 
@@ -69,7 +67,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'builtins':['authentication.templatetags.check_roles']
+            'builtins'  :   ['authentication.templatetags.check_roles']
         },
     },
 ]
@@ -123,28 +121,32 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = ['Static']
-MEDIA_ROOT = 'media'
-MEDIA_URL = '/media/'
+
+STATICFILES_DIRS=['static']
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+# media  root and url 
+
+MEDIA_ROOT = 'media'
+
+MEDIA_URL = '/media/'
 
 
-# settings for customised user model
-AUTH_USER_MODEL = 'authentication.profile'
 
+# settings for customized user model
 
+AUTH_USER_MODEL = 'authentication.Profile'
 
+# email settings 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
-EMAIL_BACKEND ='django.core.mail.backends.console.EmailBackend'
-
-
-EMAIL_HOST ='smpt.gmail.com'
+EMAIL_HOST ='smtp.gmail.com'
 
 EMAIL_PORT = 587
 

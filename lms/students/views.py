@@ -1,47 +1,47 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render,redirect
 
+from .forms import ProfileForm,StudentForm
 from django.views import View
-
-from .forms import InstructorForm
-
-from django.db import  transaction
-
-import threading
-
-from lms.utility import send_email
 
 from django.contrib.auth.hashers import make_password
 
-from students.forms import ProfileForm
+from django.db import transaction
+
+from lms.utility import send_email
+
+
+import threading
 
 # Create your views here.
-class InstructorRegisterView(View):
+
+
+class StudentRegisterView(View):
 
 
     def get(self, request, *args, **kwargs):
 
         profile_form = ProfileForm()
 
-        instructor_form = InstructorForm()
+        student_form = StudentForm()
 
         data = {
             'profile_form' : profile_form,
-            'instructor_form' : instructor_form
+            'student_form' : student_form
         }
 
 
-        return render(request,'instructors/instructor-register.html', context=data)
+        return render(request,'students/student-register.html', context=data)
 
 
     def post(self, request, *args , **kwrgs):
 
         profile_form = ProfileForm(request.POST)
 
-        instructor_form = InstructorForm(request.POST, request.FILES)
+        student_form = StudentForm(request.POST, request.FILES)
 
         print(profile_form.errors)
 
-        print(instructor_form.errors)
+        print(student_form.errors)
 
 
         if profile_form.is_valid():
@@ -57,31 +57,31 @@ class InstructorRegisterView(View):
 
                 profile.username = email
 
-                profile.role = 'Instructor'
+                profile.role = 'Student'
 
                 profile.password = make_password(password)
 
                 profile.save()
 
 
-                if instructor_form.is_valid():
+                if student_form.is_valid():
 
-                    instructor = instructor_form.save(commit= False)
+                    student = student_form.save(commit= False)
 
-                    instructor.profile = profile
+                    student.profile = profile
 
-                    instructor.name = f' {profile.first_name} {profile.last_name}'
+                    student.name = f' {profile.first_name} {profile.last_name}'
 
 
-                    instructor.save()
+                    student.save()
 
                     subject = 'Successfully Registered !!!'
 
-                    recepient = instructor.profile.email
+                    recepient = student.profile.email
                     
                     template = 'email/success-registration.html'
 
-                    context = {'name':instructor.name,'username':instructor.profile.email,'password':password}
+                    context = {'name':student.name,'username':student.profile.email,'password':password}
 
                     thread = threading.Thread(target=send_email,args=(subject,recepient,template,context))
 
@@ -95,9 +95,10 @@ class InstructorRegisterView(View):
             
         data = {
                 'profile_form' : profile_form,
-                'student_form' : instructor_form
+                'student_form' : student_form
             }
             
-        return render(request, 'instructors/instructor-register.html', context=data)
+        return render(request, 'students/student-register.html', context=data)   
+
 
 

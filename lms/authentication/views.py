@@ -1,30 +1,35 @@
-from django.shortcuts import render,redirect
-
-from django.views import View
-
-from.forms import Loginform
+from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate,login,logout
 
-# Create your views here.
+from django.views import View
 
+from .forms import LoginForm
+
+
+# from authentication.permission import permission_roles
+
+
+# Create your views here.
 
 class LoginView(View):
 
-    def get(self,request,*args,**kwargs):
 
-        form = Loginform()
+    def get(self, request , *args , **kwargs):
 
-        data = {'page':'login-page','form':form}
+        form = LoginForm()
 
-        return render(request,'authentication/login.html',context=data)
+
+        data = {'page' : 'login-page',
+                'form' : form }
+
+        return render(request, 'authentication/login.html', context=data)
     
 
-    def post(self,request,*args,**kwargs):
+    def post(self, request, *args, **kwargs):
 
-        form = Loginform(request.POST)
-
-        error =None
+        form = LoginForm(request.POST)
+        error = None
 
         if form.is_valid():
 
@@ -32,48 +37,52 @@ class LoginView(View):
 
             password = form.cleaned_data.get('password')
 
-            user = authenticate(username=username,password=password)
 
-            if user:
+            print(username, password)
+
+            user = authenticate(username=username, password=password)
+
+            if user :
 
                 login(request,user)
 
-                return redirect('courses-list')
+                return redirect('course-list')
             
-            error = 'invalid credentital'
-
-        data = {'form':form,'error':error}
-
-        return render(request,'authentication/login.html',context=data)
-
+            error = 'invalid credentials'   
+        data = {
+                'form' : form,
+                'error': error
+            }
+        
+        return render(request,'authentication/login.html', context=data)
 
 class LogoutView(View):
 
-    def get(self,request,*args,**kwargs):
+    def get(self, request , *args , **kwargs ) :
 
         logout(request)
 
-        return redirect('courses-list')
-    
+        return redirect('course-list') 
     
 class RegisterChoicesView(View):
-     
-     def get(self,request,*args,**kwargs):
-         
-         return render(request,'authentication/register-choices.html')
-     
-     def post(self,request,*args,**kwargs):
-         
-         role = request.POST.get('role')
 
-         if role== 'student':
-             
-             return redirect('student-register')
-         
-         elif role == 'instructor':
-             
-             return redirect('instructor-register')
-         
+    def get(self, request, *args, **kwargs):
+
+
+        return render(request, 'authentication/register-choices.html')
+    
+    def post(self, request, *args, **kwargs):
+
+        role = request.POST.get('role')
+
+        if role == 'student':
+
+            return redirect('student-register')
+        
+        elif role == 'instructor':
+
+            return redirect('instructor-register')
+
          
         
         
